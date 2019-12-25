@@ -50,16 +50,19 @@ module Cache_Controller
     end
 
     reg [7:0]cnt;
+    reg [7:0]addr_cnt;
     always @(*) begin
         case (current_state)
             IDLE: begin
                 if(cache_we)begin
-                    next_state <= TO_WRITE;
+                    next_state <= PREPARE_ADDR;
                     cnt <= 8'd0;
+                    // addr_cnt <= 8'd0;
                 end
                 else begin
                     next_state <= IDLE;
                     cnt <= 8'd0;
+                    // addr_cnt <= 8'd0;
                 end
             end 
             PREPARE_ADDR: begin
@@ -86,6 +89,7 @@ module Cache_Controller
         endcase
     end
 
+    //reg cache_write_buffer_end;
     always @(*) begin
         case (current_state)
             WRITE_END: begin
@@ -97,6 +101,7 @@ module Cache_Controller
         endcase
     end
 
+    //reg we_to_cache;
     always @(*) begin
         case (current_state)
             WRITE: begin
@@ -108,6 +113,7 @@ module Cache_Controller
         endcase
     end
 
+    //reg [8:0]addr_to_cache;
     always @(*) begin
         case (current_state)
             IDLE: begin
@@ -122,6 +128,7 @@ module Cache_Controller
         endcase
     end
 
+    // reg [31:0]data_to_cache;
     always @(*) begin
         case (current_state)
             PREPARE_DATA: begin
